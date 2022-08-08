@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/shader">
+        <file>line.fsh</file>
+        <file>line.vsh</file>
+        <file>texture.fsh</file>
+        <file>texture.vsh</file>
+        <file>facet.fsh</file>
+        <file>facet.vsh</file>
+        <file>shadow.fsh</file>
+        <file>depth.fsh</file>
+        <file>seasurface.vsh</file>
+        <file>seasurface.fsh</file>
+    </qresource>
+    <qresource prefix="/image">
+        <file>cube.png</file>
+    </qresource>
+</RCC>
