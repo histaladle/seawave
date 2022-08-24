@@ -57,6 +57,7 @@ void GLCylinder::updateBuffer()
     double stepangle=2*M_PI/poly;
     GLfloat *bottomvertices=new GLfloat[3*3*poly];
     GLfloat *bottomnormals=new GLfloat[3*3*poly];
+#if 1 //smooth side
     for(int i=0;i<poly*3*3;i+=9) {
         bottomvertices[i  ]=bottomcenter.x();
         bottomvertices[i+1]=bottomcenter.y();
@@ -150,6 +151,55 @@ void GLCylinder::updateBuffer()
         sidenormals [i+16]=0.0;
         sidenormals [i+17]=float(sin(i/18*stepangle+stepangle));
     }
+#endif
+#if 0 //polygon side
+    //cylinder
+    for(int i=0;i<poly*3*3*2;i+=18) {
+        //--------------------------first triangle--------------------------
+        sidevertices[i   ]=bottomcenter.x()+float(double(radius)*cos(i/18*stepangle));
+        sidevertices[i+ 1]=bottomcenter.y();
+        sidevertices[i+ 2]=bottomcenter.z()+float(double(radius)*sin(i/18*stepangle));
+        sidenormals [i   ]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+ 1]=0.0;
+        sidenormals [i+ 2]=float(sin(i/18*stepangle+stepangle/2));
+
+        sidevertices[i+ 3]=topcenter.x()+float(double(radius)*cos(i/18*stepangle));
+        sidevertices[i+ 4]=topcenter.y();
+        sidevertices[i+ 5]=topcenter.z()+float(double(radius)*sin(i/18*stepangle));
+        sidenormals [i+ 3]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+ 4]=0.0;
+        sidenormals [i+ 5]=float(sin(i/18*stepangle+stepangle/2));
+
+        sidevertices[i+ 6]=bottomcenter.x()+float(double(radius)*cos(i/18*stepangle+stepangle));
+        sidevertices[i+ 7]=bottomcenter.y();
+        sidevertices[i+ 8]=bottomcenter.z()+float(double(radius)*sin(i/18*stepangle+stepangle));
+        sidenormals [i+ 6]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+ 7]=0.0;
+        sidenormals [i+ 8]=float(sin(i/18*stepangle+stepangle/2));
+
+        //--------------------------second triangle--------------------------
+        sidevertices[i+ 9]=bottomcenter.x()+float(double(radius)*cos(i/18*stepangle+stepangle));
+        sidevertices[i+10]=bottomcenter.y();
+        sidevertices[i+11]=bottomcenter.z()+float(double(radius)*sin(i/18*stepangle+stepangle));
+        sidenormals [i+ 9]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+10]=0.0;
+        sidenormals [i+11]=float(sin(i/18*stepangle+stepangle/2));
+
+        sidevertices[i+12]=topcenter.x()+float(double(radius)*cos(i/18*stepangle));
+        sidevertices[i+13]=topcenter.y();
+        sidevertices[i+14]=topcenter.z()+float(double(radius)*sin(i/18*stepangle));
+        sidenormals [i+12]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+13]=0.0;
+        sidenormals [i+14]=float(sin(i/18*stepangle+stepangle/2));
+
+        sidevertices[i+15]=topcenter.x()+float(double(radius)*cos(i/18*stepangle+stepangle));
+        sidevertices[i+16]=topcenter.y();
+        sidevertices[i+17]=topcenter.z()+float(double(radius)*sin(i/18*stepangle+stepangle));
+        sidenormals [i+15]=float(cos(i/18*stepangle+stepangle/2));
+        sidenormals [i+16]=0.0;
+        sidenormals [i+17]=float(sin(i/18*stepangle+stepangle/2));
+    }
+#endif
     initializeOpenGLFunctions();
     if(!program.isLinked()) {
         QOpenGLShader *vsh=nullptr;
